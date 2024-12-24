@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddCourseActivity extends AppCompatActivity {
 
 
-    public int numri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
