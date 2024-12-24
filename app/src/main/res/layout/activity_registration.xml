@@ -95,7 +95,7 @@
         android:layout_below="@+id/idTILCnfPwd"
         android:layout_marginTop="40dp"
         android:textColor="@color/white"
-        android:background="@drawable/costum_button_back"
+        android:background="@drawable/round_drawable"
         android:text="Register"
         android:textAllCaps="false" />
 
