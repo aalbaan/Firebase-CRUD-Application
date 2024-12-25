@@ -40,12 +40,16 @@ public class AddCourseActivity extends AppCompatActivity {
         addCourseBtn=findViewById(R.id.idBtnAddCourse);
         loadingPB=findViewById(R.id.idPBLoading);
         firebaseDatabase=FirebaseDatabase.getInstance();
+        // on below line creating our database reference.
         databaseReference=firebaseDatabase.getReference("Courses");
 
+        // adding click listener for our add course button.
 
         addCourseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingPB.setVisibility(View.VISIBLE);
+                // getting data from our edit text.
                 String courseName=courseNameEdt.getText().toString();
                 String coursePrice=coursePriceEdt.getText().toString();
                 String suitedFor=courseSuitedForEdt.getText().toString();
@@ -53,18 +57,26 @@ public class AddCourseActivity extends AppCompatActivity {
                 String courseLink=courseLinkEdt.getText().toString();
                 String courseDesc=courseDescEdt.getText().toString();
                 courseID =courseName;
+                // on below line we are passing all data to our modal class.
                 CourseRVModel courseRVModel = new CourseRVModel(courseName,courseDesc,coursePrice,suitedFor,courseImg,courseLink,courseID);
 
+                // on below line we are calling a add value event
+                // to pass data to firebase database.
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull  DataSnapshot snapshot) {
-                       databaseReference.child(courseID).setValue(courseRVModel);
+                        loadingPB.setVisibility(View.GONE);
+                        // on below line we are setting data in our firebase database.
+                        databaseReference.child(courseID).setValue(courseRVModel);
+                        // displaying a toast message.
                         Toast.makeText(AddCourseActivity.this,"Course Added..",Toast.LENGTH_SHORT).show();
+                        // starting a main activity.
                         startActivity(new Intent(AddCourseActivity.this,MainActivity.class));
                     }
 
                     @Override
                     public void onCancelled(@NonNull  DatabaseError error) {
+                        // displaying a failure message on below line.
                         Toast.makeText(AddCourseActivity.this,"Error is "+error.toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
